@@ -24,7 +24,7 @@ const HomeScreen = (data) => {
   return (
     <View>
       <ImageBackground
-        source={iphone_8___se_____14}
+        source={require("../assets/iphone_8___se_____14.png")}
         resizeMode="cover"
         style={styles.Images}
       >
