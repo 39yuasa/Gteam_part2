@@ -48,19 +48,23 @@ const RoomScreen = (data) => {
   return (
     <>
       <View>
-        <View>
+        {/* <View>
           <Text>{name}さんのお家です</Text>
-        </View>
-        <TouchableOpacity onPress={() => userHandleChange(user1, "user1")}>
-          <Text>
+        </View> */}
+        <View style={{display:'flex',justifyContent: 'center',alignItems:"center"}}>
+        <TouchableOpacity onPress={() => userHandleChange(user1, "user1")} style={{backgroundColor: "#ffffff",width: '50%',height: '50%',borderColor: '#FFAA36',borderWidth: 3, borderRadius: 8}}>
+          <Text style={{textAlign:'center',fontSize: 16,fontWeight: 'bold', color:'#FFAA36' ,marginTop:'45%' }}>
             {user1.name == "" ? "ユーザの新規登録" : `${user1.name}でログイン`}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => userHandleChange(user2, "user2")}>
-          <Text>
+        </View>
+        <View style={{display:'flex',justifyContent: 'center',alignItems:"center"}}>
+        <TouchableOpacity onPress={() => userHandleChange(user2, "user2")} style={{backgroundColor: "#ffffff", borderColor: '#FFAA36',width: '50%',height: '50%',borderColor: '#FFAA36',borderWidth: 3 ,borderRadius: 8}}>
+          <Text style={{textAlign:'center',fontSize: 16,fontWeight: 'bold', color:'#FFAA36' ,marginTop:'45%' }}>
             {user2.name == "" ? "ユーザの新規登録" : `${user2.name}でログイン`}
           </Text>
         </TouchableOpacity>
+        </View>
       </View>
     </>
   );

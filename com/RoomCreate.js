@@ -57,17 +57,77 @@ const RoomCreate = () => {
   };
   return (
     <KeyboardAvoidingView behavior="padding">
-      <View>
-        <TextInput placeholder="room" onChangeText={(text) => setRoom(text)} />
-        <TextInput
-          placeholder="Password"
-          onChangeText={(text) => setPass(text)}
-          secureTextEntry
-        />
+      <View style={{minHeight: '40%', paddingTop: '30%'}}>
+      <Text style={{color: '#FFAA36',fontWeight: 'bold',fontSize: 40,textAlign: 'center'}}>ふたりのこと</Text>
+      <Text style={{color: '#FFAA36',fontWeight: 'bold',fontSize: 40,textAlign: 'center'}}>教えてください</Text>
       </View>
       <View>
-        <TouchableOpacity onPress={handleSignUp}>
-          <Text>Login</Text>
+      <Text style={{paddingLeft: '7%', fontSize: 16}}>ルーム名</Text>
+        <TextInput style={{
+            alignSelf: "flex-start",
+            borderWidth: 1,
+            borderColor: "#ACACAC",
+            height: 38,
+            width: "90%",
+            marginLeft: "5%",
+            marginTop: "3%",
+            paddingLeft: '2%',
+            borderRadius: 5,
+          }} placeholder="ルーム名を入力してください" onChangeText={(text) => setRoom(text)} />
+          <Text style={{marginTop:'3%', paddingLeft: '7%', fontSize: 16}}>ふたりの合言葉</Text>
+        <TextInput
+          placeholder="ふたりの合言葉を入力してください"
+          onChangeText={(text) => setPass(text)}
+          secureTextEntry
+          style={{
+            alignSelf: "flex-start",
+            borderWidth: 1,
+            borderColor: "#ACACAC",
+            height: 38,
+            width: "90%",
+            marginLeft: "5%",
+            marginTop: "5%",
+            paddingLeft: '2%',
+            borderRadius: 5,
+          }}
+        />
+        <Text style={{marginTop:'3%', paddingLeft: '7%', fontSize: 16}}>住所</Text>
+        <TextInput
+          placeholder="(例) 東京都新宿区百人町1-10-100"
+          onChangeText={(text) => set(text)}
+          secureTextEntry
+          style={{
+            alignSelf: "flex-start",
+            borderWidth: 1,
+            borderColor: "#ACACAC",
+            height: 38,
+            width: "90%",
+            marginLeft: "5%",
+            marginTop: "5%",
+            paddingLeft: '2%',
+            borderRadius: 5,
+          }}
+        />
+        <Text style={{fontSize: 12, color: '#FAB659', paddingTop: '2%', paddingLeft: '7%'}}>※帰宅時間を割り出すときにのみ利用されます。</Text>
+      </View>
+      <View>
+        <TouchableOpacity onPress={handleSignUp} style={{
+            backgroundColor: "#FFAA36",
+            width: "90%",
+            height: 47,
+            borderRadius: 5,
+            borderWidth: 0,
+            overflow: "hidden",
+            marginLeft: "5%",
+            marginTop: "10%",
+          }}>
+          <Text　style={{
+              color: "white",
+              textAlign: "center",
+              fontSize: 18,
+              fontWeight: "bold",
+              marginTop: "4%",
+            }}>次へ</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

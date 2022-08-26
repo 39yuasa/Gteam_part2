@@ -30,20 +30,12 @@ const RoomLogin = () => {
   };
   return (
     <KeyboardAvoidingView behavior="padding">
-      <View
-        style={{
-          minHeight: "70vh",
-          backgroundColor: "#E4E4E4",
-          color: "white",
-          fontWeight: "bold",
-          textAlign: "center",
-          fontSize: 42,
-          paddingTop: "50%",
-        }}
-      >
-        <Text>Yattoku!</Text>
+      <View style={{minHeight: '50%', paddingTop: '40%'}}>
+      <Text style={{color: '#FFAA36',fontWeight: 'bold',fontSize: 40,textAlign: 'center'}}>ふたりのこと</Text>
+      <Text style={{color: '#FFAA36',fontWeight: 'bold',fontSize: 40,textAlign: 'center'}}>教えてください</Text>
       </View>
       <View>
+        <Text style={{paddingLeft: '7%', fontSize:16}}>ルーム名</Text>
         <TextInput
           style={{
             alignSelf: "flex-start",
@@ -52,14 +44,16 @@ const RoomLogin = () => {
             height: 38,
             width: "90%",
             marginLeft: "5%",
+            paddingLeft: '2%',
             marginTop: "3%",
             borderRadius: 5,
           }}
-          placeholder="ルーム名"
+          placeholder="ルーム名を入力してください"
           onChangeText={(text) => setRoom(text)}
         />
+        <Text style={{marginTop:'3%', paddingLeft: '7%',fontSize: 16}}>ふたりの合言葉</Text>
         <TextInput
-          placeholder="ふたりの合言葉"
+          placeholder="ふたりの合言葉を入力してください"
           onChangeText={(text) => setPass(text)}
           secureTextEntry
           style={{
@@ -70,6 +64,7 @@ const RoomLogin = () => {
             width: "90%",
             marginLeft: "5%",
             marginTop: "5%",
+            paddingLeft: '2%',
             borderRadius: 5,
           }}
         />
@@ -92,7 +87,7 @@ const RoomLogin = () => {
             style={{
               color: "white",
               textAlign: "center",
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: "bold",
               marginTop: "4%",
             }}
