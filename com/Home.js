@@ -30,17 +30,17 @@ const HomeScreen = (data) => {
     async function Int() {
       try {
         if (Platform.OS !== "web") {
-          console.log("platですよ");
+          // console.log("platですよ");
           const { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== "granted") {
-            console.log("return動いたよ");
+            // console.log("return動いたよ");
             setErrorMessage("位置情報サービスをオンにしてください。");
             return;
           }
         }
         const location = await Location.getCurrentPositionAsync();
         const { latitude, longitude } = location.coords;
-        console.log(latitude);
+        // console.log(latitude);
         setLatitude(latitude);
         setLongitude(longitude);
       } catch {

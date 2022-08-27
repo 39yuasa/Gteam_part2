@@ -25,7 +25,7 @@ const CheckScreen = (data) => {
     get(child(RoomData, `room/${index}/`)).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
-        // console.log(Data.task);
+        // console.log(Data.);
         setTask(Data.task);
         setHome(Data.home);
         setHeadName(Data.name);
@@ -34,33 +34,37 @@ const CheckScreen = (data) => {
       }
     });
 
-    get(child(RoomData, `room/${index}/`)).then((snapshot) => {
+    // get(child(RoomData, `room/${index == "user1" ? "user1" : "user2"}/`)).then(
+    get(
+      child(RoomData, `room/${index}/${user == "user1" ? "user2" : "user1"}/`)
+    ).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
+        console.log(Data.id);
         setColor(Data.color);
-        // console.log(user);
-        // console.log(Data);
         setId(Data.id);
       } else {
-        // console.log("No data available");
+        console.log("No data available");
       }
     });
   }, []);
   // useEffect(() => {
-  //   console.log(task);
-  // }, [task]);
+  //   console.log(Id);
+  //   console.log(color);
+  // }, [Id]);
   const handleChange = (value) => {
+    console.log(value);
     const judge = (data) => {
       data.bool = !data.bool;
       async function sendPushNotification(Id) {
-        console.log("通知が送られたよ");
+        // console.log(Id);
         // ここに通知がきそう
         const message = {
           // 端末指定
           to: Id,
           sound: "default",
           title: "アプリ名",
-          body: `${value}をやっておきます`,
+          body: `${value.key}`,
           data: { someData: "goes here" },
         };
         try {
@@ -74,10 +78,11 @@ const CheckScreen = (data) => {
             body: JSON.stringify(message),
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       }
       data.bool == true ? sendPushNotification(Id) : null;
+      // sendPushNotification(Id);
       return data;
       // ここでfirebaseかき変えてしまえばよさそう、書き換えてしまえばよさそう、ただ全体がき変わるような処理になるから大変そう
       // 書き換えられたときにroomの情報をとってきて、変更したときに動く関数でstateの値を書き換える
