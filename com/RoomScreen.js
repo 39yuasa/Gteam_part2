@@ -28,6 +28,8 @@ const RoomScreen = (data) => {
     });
   }, []);
   const userHandleChange = (user, index) => {
+    // console.log(index);
+    console.log(user);
     if (user.name == "") {
       // console.log("ユーザーを新規登録します");
       navigation.navigate("UserCreate", {
@@ -40,7 +42,7 @@ const RoomScreen = (data) => {
     } else {
       navigation.navigate("Home", {
         room: room,
-        user: user,
+        user: index,
       });
     }
   };

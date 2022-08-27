@@ -31,20 +31,26 @@ const CheckScreen = (data) => {
         // console.log("No data available");
       }
     });
-    get(child(RoomData, `room/${index}/${user}`)).then((snapshot) => {
+
+    get(child(RoomData, `room/${index}/`)).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
+        console.log(user);
+        console.log(Data);
         setId(Data.id);
+      } else {
+        // console.log("No data available");
       }
     });
   }, []);
-  useEffect(() => {
-    console.log(task);
-  }, [task]);
+  // useEffect(() => {
+  //   console.log(task);
+  // }, [task]);
   const handleChange = (value) => {
     const judge = (data) => {
       data.bool = !data.bool;
       async function sendPushNotification(Id) {
+        console.log("通知が送られたよ");
         // ここに通知がきそう
         const message = {
           // 端末指定
