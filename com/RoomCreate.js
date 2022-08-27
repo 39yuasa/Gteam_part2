@@ -7,13 +7,14 @@ import {
   SafeAreaView,
   StyleSheet,
 } from "react-native";
-import { ref, get, child, set } from "firebase/database";
+import { ref, get, child, set, getDatabase } from "firebase/database";
 import { useState } from "react";
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
-import db from "../firebase";
+import app from "../firebase";
 import Slider from "./slider";
 const RoomCreate = () => {
   const navigation = useNavigation();
+  const db = getDatabase(app);
   const [room, setRoom] = useState("");
   const [pass, setPass] = useState("");
   const [home, setHome] = useState("");

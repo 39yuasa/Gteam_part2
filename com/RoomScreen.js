@@ -7,11 +7,12 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { child, get, ref } from "firebase/database";
-import db from "../firebase";
+import { child, get, getDatabase, ref } from "firebase/database";
+import app from "../firebase";
 const RoomScreen = (data) => {
   const navigation = useNavigation();
   const { room } = data.route.params;
+  const db = getDatabase(app);
   const RoomData = ref(db);
   const [name, setName] = useState("");
   const [user1, setUser1] = useState("");

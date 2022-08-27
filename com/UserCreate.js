@@ -1,4 +1,4 @@
-import { child, get, ref, set } from "firebase/database";
+import { child, get, getDatabase, ref, set } from "firebase/database";
 import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
 } from "react-native";
-import db from "../firebase";
+import app from "../firebase";
 // フォアグラウンド（アプリが立ち上がっている）のときの通知の受け取り方
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -25,6 +25,7 @@ const UserCreate = (data) => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const db = getDatabase(app);
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       // registerForPushNotificationsAsync発火
@@ -112,7 +113,7 @@ const UserCreate = (data) => {
               paddingLeft: "2%",
               borderRadius: 8,
               fontSize: 16,
-              color: "#333333"
+              color: "#333333",
             }}
           />
           <View>

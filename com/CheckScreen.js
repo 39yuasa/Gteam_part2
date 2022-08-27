@@ -6,11 +6,12 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { ref, onValue, set, get, child } from "firebase/database";
+import { ref, onValue, set, get, child, getDatabase } from "firebase/database";
 import { useEffect, useState } from "react";
-import db from "../firebase";
+import app from "../firebase";
 const CheckScreen = (data) => {
   const { index, user } = data.route.params;
+  const db = getDatabase(app);
   // idにはuserのexpoIdが入っている
   // nameにログインした人の名前が入っている
   const [task, setTask] = useState("");

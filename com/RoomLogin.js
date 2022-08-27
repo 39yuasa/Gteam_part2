@@ -7,12 +7,13 @@ import {
   SafeAreaView,
   StyleSheet,
 } from "react-native";
-import { ref, get, child } from "firebase/database";
+import { ref, get, child, getDatabase } from "firebase/database";
 import { useState } from "react";
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
-import db from "../firebase";
+import app from "../firebase";
 const RoomLogin = () => {
   const navigation = useNavigation();
+  const db = getDatabase(app);
   // console.log(navigation);
   const [room, setRoom] = useState("");
   const [pass, setPass] = useState("");

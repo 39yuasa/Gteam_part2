@@ -10,6 +10,7 @@ import HomeScreen from "./com/Home";
 import RoomScreen from "./com/RoomScreen";
 import RoomCreate from "./com/RoomCreate";
 import RoomLogin from "./com/RoomLogin";
+import MailAddress from "./com/Mail";
 // import Api from "./com/Api";
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Mail" component={MailAddress} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="RoomScreen" component={RoomScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
