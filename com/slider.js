@@ -83,7 +83,12 @@ const styles = StyleSheet.create({
     // transform: [{ translateX: -50 }],
     // bottom: 50,
     // left: 50,
-    alineSerf: "center",
+    // alineSerf: "center",
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: 'white',
+    height: '14%',
+
   },
   pagingText: {
     color: "#888",
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: width / 30,
   },
   pagingActiveText: {
-    color: "#fff",
+    color: "#FFAA36",
     margin: 3,
     fontSize: width / 30,
   },
