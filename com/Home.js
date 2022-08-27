@@ -18,8 +18,9 @@ import * as Location from "expo-location";
 const HomeScreen = (data) => {
   const GOOGLE_API_KEY = "AIzaSyDmiqSHNcm6aqEZfNW_TtyS360_DxsPQWg";
   const navigation = useNavigation();
+  console.log(data.route.params);
   const { room, user } = data.route.params;
-  console.log(room, user);
+  console.log(user);
 
   const [error, setErrorMessage] = useState("");
   const [Latitude, setLatitude] = useState(0);
