@@ -30,6 +30,7 @@ function LoginScreen() {
           bottom: 0,
           left: 0,
           width: "100%",
+          height: '22%'
         }}
       >
         <TouchableOpacity
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 0,
     overflow: "hidden",
-    marginTop: "14%",
+    marginTop: "6%",
     marginLeft: "5%",
   },
 });
