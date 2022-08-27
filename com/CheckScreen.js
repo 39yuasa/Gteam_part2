@@ -15,6 +15,7 @@ const CheckScreen = (data) => {
   // nameにログインした人の名前が入っている
   const [task, setTask] = useState("");
   const [headName, setHeadName] = useState("");
+  const [color, setColor] = useState("");
   const [home, setHome] = useState("");
   const [Id, setId] = useState("");
   const RoomData = ref(db);
@@ -35,8 +36,9 @@ const CheckScreen = (data) => {
     get(child(RoomData, `room/${index}/`)).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
-        console.log(user);
-        console.log(Data);
+        setColor(Data.color);
+        // console.log(user);
+        // console.log(Data);
         setId(Data.id);
       } else {
         // console.log("No data available");
@@ -96,8 +98,13 @@ const CheckScreen = (data) => {
   // firebaseが書き換わったときに動く処理
   const room = ref(db, `room/${index}/task`);
   onValue(room, (snapshot) => {
-    const Data = snapshot.val();
-    // console.log(Data);
+    if (snapshot.exists()) {
+      const Data = snapshot.val();
+      // console.log("hoge");
+      // setTask(Data.task);
+    } else {
+      console.log(error);
+    }
   });
   return (
     <>
@@ -115,7 +122,7 @@ const CheckScreen = (data) => {
                   // style={{ backgroundColor: "lightgray", height: 1 }}
                   name={item.key}
                   option={item.bool}
-                  color="red"
+                  color={color}
                   handle={() => handleChange(item, index)}
                 />
               </View>

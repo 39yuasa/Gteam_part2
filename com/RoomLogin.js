@@ -41,12 +41,8 @@ const RoomLogin = () => {
         }}
       >
         <View>
-          <Text style={styles.yours1}>
-            ふたりのこと
-          </Text>
-          <Text style={styles.yours2}>
-            教えてください
-          </Text>
+          <Text style={styles.yours1}>ふたりのこと</Text>
+          <Text style={styles.yours2}>教えてください</Text>
         </View>
         <View>
           <Text style={styles.title1}>ルーム名</Text>
@@ -61,18 +57,16 @@ const RoomLogin = () => {
               paddingLeft: "2%",
               borderRadius: 8,
               fontSize: 16,
-              color: "#333333"
+              color: "#333333",
             }}
             placeholder="ルーム名を入力してください"
             onChangeText={(text) => setRoom(text)}
           />
-          <Text style={styles.title2}>
-            ふたりの合言葉
-          </Text>
+          <Text style={styles.title2}>ふたりの合言葉</Text>
           <TextInput
             placeholder="ふたりの合言葉を入力してください"
             onChangeText={(text) => setPass(text)}
-            secureTextEntry
+            keyboardType="default"
             style={{
               alignSelf: "flex-start",
               borderWidth: 1,
@@ -83,7 +77,7 @@ const RoomLogin = () => {
               paddingLeft: "2%",
               borderRadius: 8,
               fontSize: 16,
-              color: "#333333"
+              color: "#333333",
             }}
           />
         </View>
