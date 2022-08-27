@@ -89,8 +89,8 @@ const UserCreate = (data) => {
       >
         <KeyboardAvoidingView behavior="padding">
           <View>
-            <Text style={styles.yours01}>あなたのこと</Text>
-            <Text style={styles.yours02}>教えてください</Text>
+            <Text style={styles.yours1}>あなたのこと</Text>
+            <Text style={styles.yours2}>教えてください</Text>
           </View>
           <View>
             <View>
@@ -112,6 +112,7 @@ const UserCreate = (data) => {
               paddingLeft: "2%",
               borderRadius: 8,
               fontSize: 16,
+              color: "#333333"
             }}
           />
           <View>
@@ -131,7 +132,7 @@ const UserCreate = (data) => {
                   height: 30,
                   backgroundColor:
                     userColor == "#D64949" ? "#D64949" : "#DE6D6D",
-                  borderWidth: userColor == "#D64949" ? 2 : 1,
+                  borderWidth: userColor == "#D64949" ? 3 : 1,
                   borderColor: userColor == "#D64949" ? "#333333" : "#BCBCBC",
                   borderRadius: 999,
                 }}
@@ -144,7 +145,7 @@ const UserCreate = (data) => {
                   height: 30,
                   backgroundColor:
                     userColor == "#F08233" ? "#F08233" : "#F39B5C",
-                  borderWidth: userColor == "#F08233" ? 2 : 1,
+                  borderWidth: userColor == "#F08233" ? 3 : 1,
                   borderColor: userColor == "#F08233" ? "#333333" : "#BCBCBC",
                   borderRadius: 999,
                 }}
@@ -157,7 +158,7 @@ const UserCreate = (data) => {
                   height: 30,
                   backgroundColor:
                     userColor == "#FFE800" ? "#FFE800" : "#FFEC33",
-                  borderWidth: userColor == "#FFE800" ? 2 : 1,
+                  borderWidth: userColor == "#FFE800" ? 3 : 1,
                   borderColor: userColor == "#FFE800" ? "#333333" : "#BCBCBC",
                   borderRadius: 999,
                 }}
@@ -170,7 +171,7 @@ const UserCreate = (data) => {
                   height: 30,
                   backgroundColor:
                     userColor == "#009245" ? "#009245" : "#33A86A",
-                  borderWidth: userColor == "#009245" ? 2 : 1,
+                  borderWidth: userColor == "#009245" ? 3 : 1,
                   borderColor: userColor == "#009245" ? "#333333" : "#BCBCBC",
                   borderRadius: 999,
                 }}
@@ -183,7 +184,7 @@ const UserCreate = (data) => {
                   height: 30,
                   backgroundColor:
                     userColor == "#135CD1" ? "#135CD1" : "#427DDA",
-                  borderWidth: userColor == "#135CD1" ? 2 : 1,
+                  borderWidth: userColor == "#135CD1" ? 3 : 1,
                   borderColor: userColor == "#135CD1" ? "#333333" : "#BCBCBC",
                   borderRadius: 999,
                 }}
@@ -196,7 +197,7 @@ const UserCreate = (data) => {
                   height: 30,
                   backgroundColor:
                     userColor == "#8142C1" ? "#8142C1" : "#9A68CD",
-                  borderWidth: userColor == "#8142C1" ? 2 : 1,
+                  borderWidth: userColor == "#8142C1" ? 3 : 1,
                   borderColor: userColor == "#8142C1" ? "#333333" : "#BCBCBC",
                   borderRadius: 999,
                 }}
@@ -211,9 +212,14 @@ const UserCreate = (data) => {
               width: "90%",
               height: 50,
               borderRadius: 8,
-              overflow: "hidden",
               marginLeft: "5%",
               marginTop: "13%",
+              shadowColor: "#333333",
+              shadowOffset: {
+                height: 3,
+              },
+              shadowRadius: 3,
+              shadowOpacity: 0.3,
             }}
           >
             <Text
@@ -283,14 +289,14 @@ async function registerForPushNotificationsAsync() {
   return token;
 }
 const styles = StyleSheet.create({
-  yours01: {
+  yours1: {
     color: "#FFAA36",
     fontSize: 36,
     fontWeight: "bold",
     textAlign: "center",
     marginTop: "30%",
   },
-  yours02: {
+  yours2: {
     color: "#FFAA36",
     fontSize: 36,
     fontWeight: "bold",

@@ -17,11 +17,21 @@ function LoginScreen() {
           <Text style={styles.white01}>Yattoku!</Text>
           <Text style={styles.white02}>はこんなアプリ</Text>
         </View> */}
-        {/* <View>
+
+        <View>
           <Slider />
-        </View> */}
+        </View>
+
       </View>
-      <View>
+      <View
+        style={{
+          backgroundColor: "#FFFFFF",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+        }}
+      >
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("RoomCreate");

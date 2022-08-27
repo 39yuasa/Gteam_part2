@@ -71,7 +71,7 @@ export default Slider;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    // marginTop: 50,
     width,
     height,
   },

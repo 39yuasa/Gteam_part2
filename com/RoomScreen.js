@@ -46,7 +46,13 @@ const RoomScreen = (data) => {
   };
   return (
     <>
-      <View>
+      <View
+        style={{
+          backgroundColor: "#FFFFFF",
+          width: "100%",
+          height: "100%",
+        }}
+      >
         {/* <View>
           <Text>{name}さんのお家です</Text>
         </View> */}
@@ -60,26 +66,33 @@ const RoomScreen = (data) => {
           <TouchableOpacity
             onPress={() => userHandleChange(user1, "user1")}
             style={{
-              backgroundColor: "#FFFFFF",
-              width: "50%",
-              height: "50%",
-              borderColor: "#FFAA36",
-              borderWidth: 3,
+              backgroundColor: "#FFAA36",
+              width: 253,
+              height: 253,
               borderRadius: 8,
+              marginTop: "8%",
+              marginBottom: "4%",
+              shadowColor: "#333333",
+              shadowOffset: {
+                height: 3,
+              },
+              shadowRadius: 3,
+              shadowOpacity: 0.3,
             }}
           >
             <Text
               style={{
                 textAlign: "center",
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: "bold",
-                color: "#FFAA36",
-                marginTop: "45%",
+                color: "#FFFFFF",
+                paddingTop: 114,
+                // marginTop: "45%",
               }}
             >
               {user1.name == ""
-                ? "ユーザの新規登録"
-                : `${user1.name}でログイン`}
+                ? "ユーザーを新規作成"
+                : `${user1.name} でログイン`}
             </Text>
           </TouchableOpacity>
         </View>
@@ -93,27 +106,33 @@ const RoomScreen = (data) => {
           <TouchableOpacity
             onPress={() => userHandleChange(user2, "user2")}
             style={{
-              backgroundColor: "#FFFFFF",
-              borderColor: "#FFAA36",
-              width: "50%",
-              height: "50%",
-              borderColor: "#FFAA36",
-              borderWidth: 3,
+              backgroundColor: "#FFAA36",
+              width: 253,
+              height: 253,
               borderRadius: 8,
+              marginTop: "4%",
+              marginBottom: "8%",
+              shadowColor: "#333333",
+              shadowOffset: {
+                height: 3,
+              },
+              shadowRadius: 3,
+              shadowOpacity: 0.3,
             }}
           >
             <Text
               style={{
                 textAlign: "center",
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: "bold",
-                color: "#FFAA36",
-                marginTop: "45%",
+                color: "#FFFFFF",
+                paddingTop: 114,
+                // marginTop: "45%",
               }}
             >
               {user2.name == ""
-                ? "ユーザの新規登録"
-                : `${user2.name}でログイン`}
+                ? "ユーザーを新規作成"
+                : `${user2.name} でログイン`}
             </Text>
           </TouchableOpacity>
         </View>

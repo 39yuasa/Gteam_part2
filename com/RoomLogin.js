@@ -5,6 +5,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   SafeAreaView,
+  StyleSheet,
 } from "react-native";
 import { ref, get, child } from "firebase/database";
 import { useState } from "react";
@@ -32,93 +33,122 @@ const RoomLogin = () => {
   };
   return (
     <KeyboardAvoidingView behavior="padding">
-      <View style={{ minHeight: "50%", paddingTop: "40%" }}>
-        <Text
-          style={{
-            color: "#FFAA36",
-            fontWeight: "bold",
-            fontSize: 40,
-            textAlign: "center",
-          }}
-        >
-          ふたりのこと
-        </Text>
-        <Text
-          style={{
-            color: "#FFAA36",
-            fontWeight: "bold",
-            fontSize: 40,
-            textAlign: "center",
-          }}
-        >
-          教えてください
-        </Text>
-      </View>
-      <View>
-        <Text style={{ paddingLeft: "7%", fontSize: 16 }}>ルーム名</Text>
-        <TextInput
-          style={{
-            alignSelf: "flex-start",
-            borderWidth: 1,
-            borderColor: "#ACACAC",
-            height: 38,
-            width: "90%",
-            marginLeft: "5%",
-            paddingLeft: "2%",
-            marginTop: "3%",
-            borderRadius: 5,
-          }}
-          placeholder="ルーム名を入力してください"
-          onChangeText={(text) => setRoom(text)}
-        />
-        <Text style={{ marginTop: "3%", paddingLeft: "7%", fontSize: 16 }}>
-          ふたりの合言葉
-        </Text>
-        <TextInput
-          placeholder="ふたりの合言葉を入力してください"
-          onChangeText={(text) => setPass(text)}
-          secureTextEntry
-          style={{
-            alignSelf: "flex-start",
-            borderWidth: 1,
-            borderColor: "#ACACAC",
-            height: 38,
-            width: "90%",
-            marginLeft: "5%",
-            marginTop: "5%",
-            paddingLeft: "2%",
-            borderRadius: 5,
-          }}
-        />
-      </View>
-      <View>
-        <TouchableOpacity
-          onPress={handleLogin}
-          style={{
-            backgroundColor: "#FFAA36",
-            width: "90%",
-            height: 47,
-            borderRadius: 5,
-            borderWidth: 0,
-            overflow: "hidden",
-            marginLeft: "5%",
-            marginTop: "10%",
-          }}
-        >
-          <Text
+      <View
+        style={{
+          backgroundColor: "#FFFFFF",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <View>
+          <Text style={styles.yours1}>
+            ふたりのこと
+          </Text>
+          <Text style={styles.yours2}>
+            教えてください
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.title1}>ルーム名</Text>
+          <TextInput
             style={{
-              color: "white",
-              textAlign: "center",
-              fontSize: 18,
-              fontWeight: "bold",
-              marginTop: "4%",
+              alignSelf: "flex-start",
+              borderWidth: 1,
+              borderColor: "#ACACAC",
+              height: 48,
+              width: "90%",
+              marginLeft: "5%",
+              paddingLeft: "2%",
+              borderRadius: 8,
+              fontSize: 16,
+              color: "#333333"
+            }}
+            placeholder="ルーム名を入力してください"
+            onChangeText={(text) => setRoom(text)}
+          />
+          <Text style={styles.title2}>
+            ふたりの合言葉
+          </Text>
+          <TextInput
+            placeholder="ふたりの合言葉を入力してください"
+            onChangeText={(text) => setPass(text)}
+            secureTextEntry
+            style={{
+              alignSelf: "flex-start",
+              borderWidth: 1,
+              borderColor: "#ACACAC",
+              height: 48,
+              width: "90%",
+              marginLeft: "5%",
+              paddingLeft: "2%",
+              borderRadius: 8,
+              fontSize: 16,
+              color: "#333333"
+            }}
+          />
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={handleLogin}
+            style={{
+              backgroundColor: "#FFAA36",
+              width: "90%",
+              height: 50,
+              borderRadius: 5,
+              borderWidth: 0,
+              marginLeft: "5%",
+              marginTop: "10%",
+              shadowColor: "#333333",
+              shadowOffset: {
+                height: 3,
+              },
+              shadowRadius: 3,
+              shadowOpacity: 0.3,
             }}
           >
-            次へ
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontSize: 18,
+                fontWeight: "bold",
+                marginTop: "4%",
+              }}
+            >
+              次へ
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
 };
 export default RoomLogin;
+
+const styles = StyleSheet.create({
+  yours1: {
+    color: "#FFAA36",
+    fontSize: 36,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: "29%",
+  },
+  yours2: {
+    color: "#FFAA36",
+    fontSize: 36,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: "29%",
+  },
+  title1: {
+    fontSize: 16,
+    marginLeft: "7%",
+    marginBottom: 16,
+  },
+  title2: {
+    fontSize: 16,
+    marginLeft: "7%",
+    marginBottom: 16,
+    marginTop: "6%",
+  },
+});
