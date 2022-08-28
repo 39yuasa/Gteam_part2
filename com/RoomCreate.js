@@ -28,7 +28,7 @@ const RoomCreate = () => {
           (response) => {
             const { lat, lng } = response.results[0].geometry.location;
             console.log(lat, lng);
-            setAddress({ lat: lat, lng: lng });
+            setAddress({ latitude: lat, longitude: lng });
           },
           (error) => {
             console.error(error);

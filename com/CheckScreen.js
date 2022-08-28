@@ -5,24 +5,26 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { ref, onValue, set, get, child, getDatabase } from "firebase/database";
 import { useEffect, useState } from "react";
 import app from "../firebase";
+import MapViewDirections from "react-native-maps-directions";
 const CheckScreen = (data) => {
   const { index, user, address } = data.route.params;
+  // addressには現在位置
   const db = getDatabase(app);
   // idにはuserのexpoIdが入っている
   // nameにログインした人の名前が入っている
   const [task, setTask] = useState("");
-  const [headName, setHeadName] = useState("");
   const [color, setColor] = useState("");
   const [color2, setColor2] = useState("");
   const [home, setHome] = useState("");
   const [Id, setId] = useState("");
+  const [returnTime, setReturnTime] = useState("");
   const RoomData = ref(db);
-  const [coordinates, setCoordinates] = useState([address, home]);
-  console.log(coordinates);
+
   useEffect(() => {
     // console.log(task);
     get(child(RoomData, `room/${index}/`)).then((snapshot) => {
@@ -31,7 +33,6 @@ const CheckScreen = (data) => {
         // console.log(Data.);
         setTask(Data.task);
         setHome(Data.home);
-        setHeadName(Data.name);
       } else {
         // console.log("No data available");
       }
@@ -61,10 +62,17 @@ const CheckScreen = (data) => {
       }
     });
   }, []);
+  const [coordinates, setCoordinates] = useState("");
+  useEffect(() => {
+    console.log(address, home);
+    setCoordinates([address, home]);
+  }, [home]);
+  // console.log(coordinates);
   const handleChange = (value) => {
     // console.log(value);
     const judge = (data) => {
       data.bool = !data.bool;
+      data.user = user;
       async function sendPushNotification(Id) {
         // console.log(Id);
         // ここに通知がきそう
@@ -103,12 +111,12 @@ const CheckScreen = (data) => {
     // valueの中には押された要素の内容が入っているからそれと内容のあうものをfirebaseから取ってきて書き換える処理をしてあげるのがベスト
     // arrayの値をfirebaseに入れ込む
     task.map((data, num) => {
-      console.log(user);
+      // console.log(user);
       set(ref(db, `room/${index}/task/${num}/`), {
         key: data.key,
         bool: data.bool,
         check: data.check,
-        user: user,
+        user: data.user,
       });
     });
   };
@@ -116,6 +124,7 @@ const CheckScreen = (data) => {
   const handleAdd = () => {
     console.log("タスク追加の処理が動いたよ");
   };
+
   // firebaseが書き換わったときに動く処理
   const room = ref(db, `room/${index}/task`);
   onValue(room, (snapshot) => {
@@ -125,10 +134,26 @@ const CheckScreen = (data) => {
       console.log(error);
     }
   });
+  const GOOGLE_API_KEY = "AIzaSyDmiqSHNcm6aqEZfNW_TtyS360_DxsPQWg";
   return (
     <>
+      <Text>{returnTime}分</Text>
       <View style={styles.wrap}>
+        <MapViewDirections
+          origin={coordinates[0]}
+          destination={coordinates[1]}
+          apikey={GOOGLE_API_KEY} // insert your API Key here
+          strokeWidth={4}
+          strokeColor="#111111"
+          onReady={(result) => {
+            console.log(`Distance: ${result.distance} km`);
+            console.log(`Duration: ${result.duration} min.`);
+            setReturnTime(Math.floor(result.duration));
+          }}
+        />
         <View style={styles.textInput}>
+          {/* ここに写真お願い */}
+          {/* <Image source={uri:}/> */}
           <Text style={styles.textcr}>ToDoリスト</Text>
         </View>
         <View style={styles.bgbox}>
@@ -136,23 +161,16 @@ const CheckScreen = (data) => {
             data={task}
             renderItem={
               ({ item, num }) => (
-                console.log(
-                  user == item.user ? color2 : color,
-                  user,
-                  item.user,
-                  color
-                ),
-                (
-                  <View style={styles.textline}>
-                    <CheckList
-                      // style={{ backgroundColor: "lightgray", height: 1 }}
-                      name={item.key}
-                      option={item.bool}
-                      color={item.user == user ? color : color2}
-                      handle={() => handleChange(item, num)}
-                    />
-                  </View>
-                )
+                <View style={styles.textline}>
+                  <CheckList
+                    // style={{ backgroundColor: "lightgray", height: 1 }}
+                    name={item.key}
+                    option={item.bool}
+                    color={item.user == user ? color : color2}
+                    handle={() => handleChange(item, num)}
+                    check={item.check}
+                  />
+                </View>
               )
               //もう一個をfalseかtrueであげて、checklistのほうでpropsのbooleanによって書かれるか書かれないかの処理で良さそう
             }

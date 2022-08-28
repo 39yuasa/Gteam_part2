@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import { CheckBox } from "react-native-elements";
 const CheckList = (props) => {
+  // if({props.check})
   return (
     <View>
       <CheckBox
@@ -11,6 +12,24 @@ const CheckList = (props) => {
         checkedColor={props.color}
       />
       {/* <Text style={styles.container}>{props.name}</Text> */}
+      {props.check &&
+        (console.log(props.check),
+        (
+          <TextInput
+            style={{
+              alignSelf: "flex-start",
+              borderWidth: 1,
+              borderColor: "#ACACAC",
+              height: 48,
+              width: "90%",
+              marginLeft: "5%",
+              paddingLeft: "2%",
+              borderRadius: 8,
+              fontSize: 16,
+              color: "#333333",
+            }}
+          ></TextInput>
+        ))}
     </View>
   );
 };

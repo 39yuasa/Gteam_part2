@@ -44,7 +44,7 @@ const HomeScreen = (data) => {
         console.log(latitude);
         // setLatitude(latitude);
         // setLongitude(longitude);
-        setDress({ lat: latitude, long: longitude });
+        setDress({ latitude: latitude, longitude: longitude });
       } catch {
         console.log(error);
       }
