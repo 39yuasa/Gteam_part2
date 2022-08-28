@@ -148,13 +148,9 @@ const CheckScreen = (data) => {
           <TouchableOpacity style={{backgroundColor: '#FFAA36',width: '100%',height: '50%',marginTop: '15%',borderBottomLeftRadius: 10,borderBottomRightRadius: 10}}>
             <Text style={styles.iconspulus}> ＋</Text>
           </TouchableOpacity>
-<<<<<<< HEAD
-        </View>
-=======
-          <TouchableOpacity style={styles.addition} onPress={handleAdd}>
+          <TouchableOpacity style={styles.addition}>
             <Text style={styles.textaddition}>ToDoリストに追加</Text>
           </TouchableOpacity>
->>>>>>> 7cda564b29ee9e1e31eddbfb80e07f07faf3edc9
         </View>
         {/* </View> */}
         {/*  */}
