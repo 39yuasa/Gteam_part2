@@ -10,16 +10,19 @@ import { ref, onValue, set, get, child, getDatabase } from "firebase/database";
 import { useEffect, useState } from "react";
 import app from "../firebase";
 const CheckScreen = (data) => {
-  const { index, user } = data.route.params;
+  const { index, user, address } = data.route.params;
   const db = getDatabase(app);
   // idにはuserのexpoIdが入っている
   // nameにログインした人の名前が入っている
   const [task, setTask] = useState("");
   const [headName, setHeadName] = useState("");
   const [color, setColor] = useState("");
+  const [color2, setColor2] = useState("");
   const [home, setHome] = useState("");
   const [Id, setId] = useState("");
   const RoomData = ref(db);
+  const [coordinates, setCoordinates] = useState([address, home]);
+  console.log(coordinates);
   useEffect(() => {
     // console.log(task);
     get(child(RoomData, `room/${index}/`)).then((snapshot) => {
@@ -40,20 +43,26 @@ const CheckScreen = (data) => {
     ).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
-        console.log(Data.id);
+        // console.log(Data.id);
         setColor(Data.color);
         setId(Data.id);
       } else {
         console.log("No data available");
       }
     });
+    get(
+      child(RoomData, `room/${index}/${user == "user1" ? "user1" : "user2"}/`)
+    ).then((snapshot) => {
+      if (snapshot.exists()) {
+        const Data = snapshot.val();
+        setColor2(Data.color);
+      } else {
+        console.log("No data available");
+      }
+    });
   }, []);
-  // useEffect(() => {
-  //   console.log(Id);
-  //   console.log(color);
-  // }, [Id]);
   const handleChange = (value) => {
-    console.log(value);
+    // console.log(value);
     const judge = (data) => {
       data.bool = !data.bool;
       async function sendPushNotification(Id) {
@@ -94,10 +103,12 @@ const CheckScreen = (data) => {
     // valueの中には押された要素の内容が入っているからそれと内容のあうものをfirebaseから取ってきて書き換える処理をしてあげるのがベスト
     // arrayの値をfirebaseに入れ込む
     task.map((data, num) => {
+      console.log(user);
       set(ref(db, `room/${index}/task/${num}/`), {
         key: data.key,
         bool: data.bool,
         check: data.check,
+        user: user,
       });
     });
   };
@@ -124,16 +135,24 @@ const CheckScreen = (data) => {
         <FlatList
           data={task}
           renderItem={
-            ({ item, index }) => (
-              <View style={styles.textline}>
-                <CheckList
-                  // style={{ backgroundColor: "lightgray", height: 1 }}
-                  name={item.key}
-                  option={item.bool}
-                  color={color}
-                  handle={() => handleChange(item, index)}
-                />
-              </View>
+            ({ item, num }) => (
+              console.log(
+                user == item.user ? color2 : color,
+                user,
+                item.user,
+                color
+              ),
+              (
+                <View style={styles.textline}>
+                  <CheckList
+                    // style={{ backgroundColor: "lightgray", height: 1 }}
+                    name={item.key}
+                    option={item.bool}
+                    color={item.user == user ? color : color2}
+                    handle={() => handleChange(item, num)}
+                  />
+                </View>
+              )
             )
             //もう一個をfalseかtrueであげて、checklistのほうでpropsのbooleanによって書かれるか書かれないかの処理で良さそう
           }

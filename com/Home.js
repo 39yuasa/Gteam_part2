@@ -7,7 +7,7 @@ import {
   ImageBackground,
   Text,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import iphone_8___se_____14 from "../assets/iphone_8___se_____14.png";
@@ -18,19 +18,20 @@ import * as Location from "expo-location";
 const HomeScreen = (data) => {
   const GOOGLE_API_KEY = "AIzaSyDmiqSHNcm6aqEZfNW_TtyS360_DxsPQWg";
   const navigation = useNavigation();
-  console.log(data.route.params);
+  // console.log(data.route.params);
   const { room, user } = data.route.params;
-  console.log(user);
+  // console.log(user);
 
   const [error, setErrorMessage] = useState("");
-  const [Latitude, setLatitude] = useState(0);
-  const [Longitude, setLongitude] = useState(0);
+  // const [Latitude, setLatitude] = useState(0);
+  // const [Longitude, setLongitude] = useState(0);
+  const [dress, setDress] = useState("");
   const [text, setText] = useState("変更前");
-  const handleReturn = () => {
+  useEffect(() => {
     async function Int() {
       try {
         if (Platform.OS !== "web") {
-          // console.log("platですよ");
+          console.log("platですよ");
           const { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== "granted") {
             // console.log("return動いたよ");
@@ -40,19 +41,23 @@ const HomeScreen = (data) => {
         }
         const location = await Location.getCurrentPositionAsync();
         const { latitude, longitude } = location.coords;
-        // console.log(latitude);
-        setLatitude(latitude);
-        setLongitude(longitude);
+        console.log(latitude);
+        // setLatitude(latitude);
+        // setLongitude(longitude);
+        setDress({ lat: latitude, long: longitude });
       } catch {
         console.log(error);
       }
     }
     Int();
+  }, []);
+
+  const handleReturn = () => {
+    console.log(dress);
     navigation.navigate("User", {
       index: room,
       user: user,
-      latitude: Latitude,
-      longitude: Longitude,
+      address: dress,
     });
   };
 
