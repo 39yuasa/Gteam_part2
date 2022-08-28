@@ -131,7 +131,7 @@ const CheckScreen = (data) => {
         <View style={styles.textInput}>
           <Text style={styles.textcr}>ToDoリスト</Text>
         </View>
-        {/* <View style={styles.bgbox}> */}
+        <View style={styles.bgbox}>
         <FlatList
           data={task}
           renderItem={
@@ -164,10 +164,10 @@ const CheckScreen = (data) => {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity style={{backgroundColor: '#FFAA36',width: '100%',height: '50%',marginTop: '15%',borderBottomLeftRadius: 10,borderBottomRightRadius: 10}}>
             <Text style={styles.iconspulus}> ＋</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.addition} onPress={handleAdd}>
+          <TouchableOpacity style={styles.addition}>
             <Text style={styles.textaddition}>ToDoリストに追加</Text>
           </TouchableOpacity>
         </View>
@@ -287,10 +287,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   iconspulus: {
-    backgroundColor: "#FFAA36",
-    width: 21,
-    borderRadius: 100,
     color: "white",
+    textAlign: 'center',
+            alignItems: "center",
+    fontSize: 40,
+    fontWeight: 'bold'
   },
   textline: {
     width: "100%",
