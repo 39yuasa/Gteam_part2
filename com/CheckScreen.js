@@ -6,15 +6,17 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { ref, onValue, set, get, child } from "firebase/database";
+import { ref, onValue, set, get, child, getDatabase } from "firebase/database";
 import { useEffect, useState } from "react";
-import db from "../firebase";
+import app from "../firebase";
 const CheckScreen = (data) => {
   const { index, user } = data.route.params;
+  const db = getDatabase(app);
   // idにはuserのexpoIdが入っている
   // nameにログインした人の名前が入っている
   const [task, setTask] = useState("");
   const [headName, setHeadName] = useState("");
+  const [color, setColor] = useState("");
   const [home, setHome] = useState("");
   const [Id, setId] = useState("");
   const RoomData = ref(db);
@@ -23,7 +25,7 @@ const CheckScreen = (data) => {
     get(child(RoomData, `room/${index}/`)).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
-        // console.log(Data.task);
+        // console.log(Data.);
         setTask(Data.task);
         setHome(Data.home);
         setHeadName(Data.name);
@@ -32,32 +34,37 @@ const CheckScreen = (data) => {
       }
     });
 
-    get(child(RoomData, `room/${index}/`)).then((snapshot) => {
+    // get(child(RoomData, `room/${index == "user1" ? "user1" : "user2"}/`)).then(
+    get(
+      child(RoomData, `room/${index}/${user == "user1" ? "user2" : "user1"}/`)
+    ).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
-        console.log(user);
-        console.log(Data);
+        console.log(Data.id);
+        setColor(Data.color);
         setId(Data.id);
       } else {
-        // console.log("No data available");
+        console.log("No data available");
       }
     });
   }, []);
   // useEffect(() => {
-  //   console.log(task);
-  // }, [task]);
+  //   console.log(Id);
+  //   console.log(color);
+  // }, [Id]);
   const handleChange = (value) => {
+    console.log(value);
     const judge = (data) => {
       data.bool = !data.bool;
       async function sendPushNotification(Id) {
-        console.log("通知が送られたよ");
+        // console.log(Id);
         // ここに通知がきそう
         const message = {
           // 端末指定
           to: Id,
           sound: "default",
           title: "アプリ名",
-          body: `${value}をやっておきます`,
+          body: `${value.key}`,
           data: { someData: "goes here" },
         };
         try {
@@ -71,10 +78,11 @@ const CheckScreen = (data) => {
             body: JSON.stringify(message),
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       }
       data.bool == true ? sendPushNotification(Id) : null;
+      // sendPushNotification(Id);
       return data;
       // ここでfirebaseかき変えてしまえばよさそう、書き換えてしまえばよさそう、ただ全体がき変わるような処理になるから大変そう
       // 書き換えられたときにroomの情報をとってきて、変更したときに動く関数でstateの値を書き換える
@@ -93,11 +101,18 @@ const CheckScreen = (data) => {
       });
     });
   };
+
+  const handleAdd = () => {
+    console.log("タスク追加の処理が動いたよ");
+  };
   // firebaseが書き換わったときに動く処理
   const room = ref(db, `room/${index}/task`);
   onValue(room, (snapshot) => {
-    const Data = snapshot.val();
-    // console.log(Data);
+    if (snapshot.exists()) {
+      const Data = snapshot.val();
+    } else {
+      console.log(error);
+    }
   });
   return (
     <>
@@ -115,7 +130,7 @@ const CheckScreen = (data) => {
                   // style={{ backgroundColor: "lightgray", height: 1 }}
                   name={item.key}
                   option={item.bool}
-                  color="red"
+                  color={color}
                   handle={() => handleChange(item, index)}
                 />
               </View>
@@ -133,7 +148,13 @@ const CheckScreen = (data) => {
           <TouchableOpacity style={{backgroundColor: '#FFAA36',width: '100%',height: '50%',marginTop: '15%',borderBottomLeftRadius: 10,borderBottomRightRadius: 10}}>
             <Text style={styles.iconspulus}> ＋</Text>
           </TouchableOpacity>
+<<<<<<< HEAD
         </View>
+=======
+          <TouchableOpacity style={styles.addition} onPress={handleAdd}>
+            <Text style={styles.textaddition}>ToDoリストに追加</Text>
+          </TouchableOpacity>
+>>>>>>> 7cda564b29ee9e1e31eddbfb80e07f07faf3edc9
         </View>
         {/* </View> */}
         {/*  */}

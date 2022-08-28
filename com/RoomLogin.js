@@ -7,12 +7,13 @@ import {
   SafeAreaView,
   StyleSheet,
 } from "react-native";
-import { ref, get, child } from "firebase/database";
+import { ref, get, child, getDatabase } from "firebase/database";
 import { useState } from "react";
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
-import db from "../firebase";
+import app from "../firebase";
 const RoomLogin = () => {
   const navigation = useNavigation();
+  const db = getDatabase(app);
   // console.log(navigation);
   const [room, setRoom] = useState("");
   const [pass, setPass] = useState("");
@@ -41,12 +42,8 @@ const RoomLogin = () => {
         }}
       >
         <View>
-          <Text style={styles.yours1}>
-            ふたりのこと
-          </Text>
-          <Text style={styles.yours2}>
-            教えてください
-          </Text>
+          <Text style={styles.yours1}>ふたりのこと</Text>
+          <Text style={styles.yours2}>教えてください</Text>
         </View>
         <View>
           <Text style={styles.title1}>ルーム名</Text>
@@ -61,18 +58,16 @@ const RoomLogin = () => {
               paddingLeft: "2%",
               borderRadius: 8,
               fontSize: 16,
-              color: "#333333"
+              color: "#333333",
             }}
             placeholder="ルーム名を入力してください"
             onChangeText={(text) => setRoom(text)}
           />
-          <Text style={styles.title2}>
-            ふたりの合言葉
-          </Text>
+          <Text style={styles.title2}>ふたりの合言葉</Text>
           <TextInput
             placeholder="ふたりの合言葉を入力してください"
             onChangeText={(text) => setPass(text)}
-            secureTextEntry
+            keyboardType="default"
             style={{
               alignSelf: "flex-start",
               borderWidth: 1,
@@ -83,7 +78,7 @@ const RoomLogin = () => {
               paddingLeft: "2%",
               borderRadius: 8,
               fontSize: 16,
-              color: "#333333"
+              color: "#333333",
             }}
           />
         </View>
