@@ -73,6 +73,12 @@ const HomeScreen = (data) => {
           alt="猫"
           style={{ width: "80%", marginLeft: "10%", marginTop: 180, zIndex: 1 }}
         /> */}
+        <View>
+          <Image />
+          <TouchableOpacity>
+            <Text>todo</Text>
+          </TouchableOpacity>
+        </View>
         <View
           style={{
             flex: 1,

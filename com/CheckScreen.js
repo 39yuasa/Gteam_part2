@@ -132,44 +132,55 @@ const CheckScreen = (data) => {
           <Text style={styles.textcr}>ToDoリスト</Text>
         </View>
         <View style={styles.bgbox}>
-        <FlatList
-          data={task}
-          renderItem={
-            ({ item, num }) => (
-              console.log(
-                user == item.user ? color2 : color,
-                user,
-                item.user,
-                color
-              ),
-              (
-                <View style={styles.textline}>
-                  <CheckList
-                    // style={{ backgroundColor: "lightgray", height: 1 }}
-                    name={item.key}
-                    option={item.bool}
-                    color={item.user == user ? color : color2}
-                    handle={() => handleChange(item, num)}
-                  />
-                </View>
+          <FlatList
+            data={task}
+            renderItem={
+              ({ item, num }) => (
+                console.log(
+                  user == item.user ? color2 : color,
+                  user,
+                  item.user,
+                  color
+                ),
+                (
+                  <View style={styles.textline}>
+                    <CheckList
+                      // style={{ backgroundColor: "lightgray", height: 1 }}
+                      name={item.key}
+                      option={item.bool}
+                      color={item.user == user ? color : color2}
+                      handle={() => handleChange(item, num)}
+                    />
+                  </View>
+                )
               )
-            )
-            //もう一個をfalseかtrueであげて、checklistのほうでpropsのbooleanによって書かれるか書かれないかの処理で良さそう
-          }
-        />
-        <View
-          style={{
-            flex: 1,
-            width: "100%",
-            flexDirection: "row",
-          }}
-        >
-          <TouchableOpacity style={{backgroundColor: '#FFAA36',width: '100%',height: '50%',marginTop: '15%',borderBottomLeftRadius: 10,borderBottomRightRadius: 10}}>
-            <Text style={styles.iconspulus}> ＋</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.addition}>
+              //もう一個をfalseかtrueであげて、checklistのほうでpropsのbooleanによって書かれるか書かれないかの処理で良さそう
+            }
+          />
+
+          <View
+            style={{
+              flex: 1,
+              width: "100%",
+              flexDirection: "row",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#FFAA36",
+                width: "100%",
+                height: "50%",
+                marginTop: "15%",
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+              }}
+            >
+              <Text style={styles.iconspulus}> ＋</Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity style={styles.addition}>
             <Text style={styles.textaddition}>ToDoリストに追加</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          </View>
         </View>
         {/* </View> */}
         {/*  */}
@@ -288,10 +299,10 @@ const styles = StyleSheet.create({
   },
   iconspulus: {
     color: "white",
-    textAlign: 'center',
-            alignItems: "center",
+    textAlign: "center",
+    alignItems: "center",
     fontSize: 40,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   textline: {
     width: "100%",

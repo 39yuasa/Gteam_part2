@@ -19,7 +19,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Mail" component={MailAddress} />
+        {/* <Stack.Screen name="Mail" component={MailAddress} /> */}
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="RoomScreen" component={RoomScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
