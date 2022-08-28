@@ -8,58 +8,78 @@ import {
   StyleSheet,
 } from "react-native";
 import { ref, get, child, set, getDatabase } from "firebase/database";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation, NavigationContainer } from "@react-navigation/native";
 import app from "../firebase";
-import Slider from "./slider";
+import Geocode from "react-geocode";
+import { async } from "@firebase/util";
+
 const RoomCreate = () => {
   const navigation = useNavigation();
   const db = getDatabase(app);
   const [room, setRoom] = useState("");
   const [pass, setPass] = useState("");
   const [home, setHome] = useState("");
+  const [address, setAddress] = useState("");
   const handleSignUp = () => {
-    room !== "" && pass !== "" && home !== ""
-      ? set(ref(db, `room/${room}`), {
-          name: room,
-          pass: pass,
-          home: home,
-          task: [
-            {
-              key: "料理を作る",
-              bool: false,
-              check: false,
-            },
-            {
-              key: "洗濯物をたたむ",
-              bool: false,
-              check: false,
-            },
-            {
-              key: "お風呂を洗う",
-              bool: false,
-              check: false,
-            },
-            {
-              key: "買い物に行く",
-              bool: false,
-              check: true,
-            },
-          ],
-          user1: {
-            name: "",
-            id: "",
-            color: "",
+    if (room !== "" && pass !== "" && home !== "") {
+      Geocode.setApiKey("AIzaSyBJoGEJJd79nIexOoBgFmSoSPWsU-EbYw4"),
+        Geocode.fromAddress(home).then(
+          (response) => {
+            const { lat, lng } = response.results[0].geometry.location;
+            console.log(lat, lng);
+            setAddress({ lat: lat, lng: lng });
           },
-          user2: {
-            name: "",
-            id: "",
-            color: "",
-          },
-        })
-      : alert("どこか空だよ");
-    navigation.navigate("RoomScreen", { room: room });
+          (error) => {
+            console.error(error);
+          }
+        );
+    } else {
+      alert("何処か空だよ");
+    }
   };
+  useEffect(() => {
+    if (room !== "" && pass !== "" && address !== "") {
+      set(ref(db, `room/${room}`), {
+        name: room,
+        pass: pass,
+        home: address,
+        task: [
+          {
+            key: "料理を作る",
+            bool: false,
+            check: false,
+          },
+          {
+            key: "洗濯物をたたむ",
+            bool: false,
+            check: false,
+          },
+          {
+            key: "お風呂を洗う",
+            bool: false,
+            check: false,
+          },
+          {
+            key: "買い物に行く",
+            bool: false,
+            check: true,
+          },
+        ],
+        user1: {
+          name: "",
+          id: "",
+          color: "",
+        },
+        user2: {
+          name: "",
+          id: "",
+          color: "",
+        },
+      });
+      navigation.navigate("RoomScreen", { room: room });
+    }
+  }, [address]);
   return (
     <KeyboardAvoidingView behavior="padding">
       <View

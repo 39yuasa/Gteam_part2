@@ -21,7 +21,6 @@ function LoginScreen() {
         <View>
           <Slider />
         </View>
-
       </View>
       <View
         style={{
@@ -30,7 +29,7 @@ function LoginScreen() {
           bottom: 0,
           left: 0,
           width: "100%",
-          height: '22%'
+          height: "22%",
         }}
       >
         <TouchableOpacity
