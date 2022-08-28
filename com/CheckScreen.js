@@ -101,13 +101,15 @@ const CheckScreen = (data) => {
       });
     });
   };
+
+  const handleAdd = () => {
+    console.log("タスク追加の処理が動いたよ");
+  };
   // firebaseが書き換わったときに動く処理
   const room = ref(db, `room/${index}/task`);
   onValue(room, (snapshot) => {
     if (snapshot.exists()) {
       const Data = snapshot.val();
-      // console.log("hoge");
-      // setTask(Data.task);
     } else {
       console.log(error);
     }
@@ -146,7 +148,7 @@ const CheckScreen = (data) => {
           <TouchableOpacity>
             <Text style={styles.iconspulus}> ＋</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.addition}>
+          <TouchableOpacity style={styles.addition} onPress={handleAdd}>
             <Text style={styles.textaddition}>ToDoリストに追加</Text>
           </TouchableOpacity>
         </View>
