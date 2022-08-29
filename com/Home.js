@@ -73,92 +73,92 @@ const HomeScreen = (data) => {
   const oneImage = Image.resolveAssetSource(one);
   return (
     <View>
-      {/* <ImageBackground
+      <ImageBackground
         source={iphone_8___se_____14}
         resizeMode="cover"
         style={styles.Images}
-      > */}
-      {/* <Image
+      >
+        {/* <Image
           source={hello}
           alt="猫"
           style={{ width: "80%", marginLeft: "10%", marginTop: 180, zIndex: 1 }}
         /> */}
-      <View>
-        {/* homeと行き来するボタン */}
-        <TouchableOpacity onPress={handleGoto}>
-          <View>
-            <Image
-              source={{ uri: oneImage.uri }}
-              style={{ width: 10, height: 10 }}
-            />
-            <Text>ToDo</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          width: "100%",
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity
-          onPress={handleReturn}
+        <View>
+          {/* homeと行き来するボタン */}
+          <TouchableOpacity onPress={handleGoto}>
+            <View>
+              <Image
+                source={{ uri: oneImage.uri }}
+                style={{ width: 10, height: 10 }}
+              />
+              <Text>ToDo</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
           style={{
-            backgroundColor: "#FFAA36",
-            width: "42%",
-            height: 47,
-            borderRadius: 5,
-            borderWidth: 0,
-            overflow: "hidden",
-            marginLeft: "6%",
-            marginTop: 240,
-            zIndex: 2,
+            flex: 1,
+            width: "100%",
+            flexDirection: "row",
           }}
         >
-          <Text
+          <TouchableOpacity
+            onPress={handleReturn}
             style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              color: "#fff",
-              textAlign: "center",
-              marginTop: "auto",
-              marginBottom: "auto",
+              backgroundColor: "#FFAA36",
+              width: "42%",
+              height: 47,
+              borderRadius: 5,
+              borderWidth: 0,
+              overflow: "hidden",
+              marginLeft: "6%",
+              marginTop: 240,
+              zIndex: 2,
             }}
           >
-            家に帰る
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#fff",
+                textAlign: "center",
+                marginTop: "auto",
+                marginBottom: "auto",
+              }}
+            >
+              家に帰る
+            </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => alert("(仮)ありがとうを送信しました。")}
-          style={{
-            backgroundColor: "#FFAA36",
-            width: "42%",
-            height: 47,
-            borderRadius: 5,
-            borderWidth: 0,
-            overflow: "hidden",
-            marginTop: 240,
-            marginLeft: "3%",
-            zIndex: 2,
-          }}
-        >
-          <Text
+          <TouchableOpacity
+            onPress={() => alert("(仮)ありがとうを送信しました。")}
             style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              color: "#fff",
-              textAlign: "center",
-              marginTop: "auto",
-              marginBottom: "auto",
+              backgroundColor: "#FFAA36",
+              width: "42%",
+              height: 47,
+              borderRadius: 5,
+              borderWidth: 0,
+              overflow: "hidden",
+              marginTop: 240,
+              marginLeft: "3%",
+              zIndex: 2,
             }}
           >
-            ありがとう
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {/* // </ImageBackground> */}
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#fff",
+                textAlign: "center",
+                marginTop: "auto",
+                marginBottom: "auto",
+              }}
+            >
+              ありがとう
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
