@@ -66,7 +66,7 @@ const CheckScreen = (data) => {
   }, []);
   const [coordinates, setCoordinates] = useState("");
   useEffect(() => {
-    console.log(address, home);
+    // console.log(address, home);
     setCoordinates([address, home]);
   }, [home]);
   // console.log(coordinates);
@@ -146,21 +146,47 @@ const CheckScreen = (data) => {
     setHour(hour);
     const minutes = new Date().getMinutes();
     setMinutes(minutes);
-    // console.log(Hour);
-  }, [returnTime]);
-  useEffect(() => {
-    console.log("setMinutesが動いたよ");
-    console.log(returnTime);
     const time = Minutes + returnTime;
     time > 60
-      ? setTimer(`${Hour + 1}時${time - 60}分`)
-      : setTimer(`${Hour}時${time}分`);
-  }, [Minutes]);
+      ? setTimer(`${Hour + 1}:${time - 60}`)
+      : setTimer(`${Hour}:${time}`);
+    // console.log(Hour);
+  }, [returnTime]);
+
   const handleGo = () => {
     navigation.navigate("Home", {
       index: index,
       user: user,
     });
+  };
+
+  const handleThank = () => {
+    async function sendPushNotification(Id) {
+      // console.log(Id);
+      // ここに通知がきそう
+      const message = {
+        // 端末指定
+        to: Id,
+        sound: "default",
+        title: "アプリ名",
+        body: `ありがとう`,
+        data: { someData: "goes here" },
+      };
+      try {
+        await fetch("https://exp.host/--/api/v2/push/send", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Accept-encoding": "gzip, deflate",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(message),
+        });
+      } catch (error) {
+        // console.log(error);
+      }
+    }
+    sendPushNotification(Id);
   };
   // useEffect(() => {
   //   console.log(timer);
@@ -171,7 +197,7 @@ const CheckScreen = (data) => {
   return (
     <>
       {/* ここが時間のところ */}
-      <Text>{timer}</Text>
+      <Text>帰宅予定時刻{timer}</Text>
       <View style={styles.wrap}>
         <MapViewDirections
           origin={coordinates[0]}
@@ -185,15 +211,14 @@ const CheckScreen = (data) => {
             setReturnTime(Math.floor(result.duration));
           }}
         />
+        {/* ここに写真お願い */}
         <TouchableOpacity onPress={handleGo}>
           <View>
             <Image source={{ uri: oneImage.uri }} />
-            <Text>homeに戻る</Text>
+            <Text>Home</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.textInput}>
-          {/* ここに写真お願い */}
-          {/* <Image source={uri:}/> */}
           <Text style={styles.textcr}>ToDoリスト</Text>
         </View>
         <View style={styles.bgbox}>
@@ -247,7 +272,7 @@ const CheckScreen = (data) => {
           }}
         >
           <TouchableOpacity
-            onPress={() => alert("(仮)帰宅時間をスタートします")}
+            onPress={handleThank}
             style={{
               backgroundColor: "#ACACAC",
               width: "42%",
@@ -356,7 +381,7 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     alignItems: "center",
-    fontSize: 40,
+    fontSize: 20,
     fontWeight: "bold",
   },
   textline: {

@@ -91,7 +91,7 @@ const HomeScreen = (data) => {
               source={{ uri: oneImage.uri }}
               style={{ width: 10, height: 10 }}
             />
-            <Text>チェックリストを見る</Text>
+            <Text>ToDo</Text>
           </View>
         </TouchableOpacity>
       </View>
