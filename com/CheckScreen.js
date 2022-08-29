@@ -11,7 +11,9 @@ import { ref, onValue, set, get, child, getDatabase } from "firebase/database";
 import { useEffect, useState } from "react";
 import app from "../firebase";
 import MapViewDirections from "react-native-maps-directions";
+import { useNavigation } from "@react-navigation/native";
 const CheckScreen = (data) => {
+  const navigation = useNavigation();
   const { index, user, address } = data.route.params;
   // addressには現在位置
   const db = getDatabase(app);
@@ -22,7 +24,7 @@ const CheckScreen = (data) => {
   const [color2, setColor2] = useState("");
   const [home, setHome] = useState("");
   const [Id, setId] = useState("");
-  const [returnTime, setReturnTime] = useState("");
+
   const RoomData = ref(db);
 
   useEffect(() => {
@@ -120,24 +122,56 @@ const CheckScreen = (data) => {
       });
     });
   };
-
+  // const one = require("../assets/one.png");
+  // const oneImage = Image.resolveAssetSource(one);
   const handleAdd = () => {
     console.log("タスク追加の処理が動いたよ");
   };
 
   // firebaseが書き換わったときに動く処理
-  const room = ref(db, `room/${index}/task`);
-  onValue(room, (snapshot) => {
-    if (snapshot.exists()) {
-      const Data = snapshot.val();
-    } else {
-      console.log(error);
-    }
-  });
+  // const room = ref(db, `room/${index}/task`);
+  // onValue(room, (snapshot) => {
+  //   if (snapshot.exists()) {
+  //     const Data = snapshot.val();
+  //   } else {
+  //     console.log(error);
+  //   }
+  // });
+  const [returnTime, setReturnTime] = useState("");
+  const [Hour, setHour] = useState(0);
+  const [Minutes, setMinutes] = useState(0);
+  const [timer, setTimer] = useState("");
+  useEffect(() => {
+    const hour = new Date().getHours();
+    setHour(hour);
+    const minutes = new Date().getMinutes();
+    setMinutes(minutes);
+    // console.log(Hour);
+  }, [returnTime]);
+  useEffect(() => {
+    console.log("setMinutesが動いたよ");
+    console.log(returnTime);
+    const time = Minutes + returnTime;
+    time > 60
+      ? setTimer(`${Hour + 1}時${time - 60}分`)
+      : setTimer(`${Hour}時${time}分`);
+  }, [Minutes]);
+  const handleGo = () => {
+    navigation.navigate("Home", {
+      index: index,
+      user: user,
+    });
+  };
+  // useEffect(() => {
+  //   console.log(timer);
+  // }, [timer]);
   const GOOGLE_API_KEY = "AIzaSyDmiqSHNcm6aqEZfNW_TtyS360_DxsPQWg";
+  const one = require("../assets/one.png");
+  const oneImage = Image.resolveAssetSource(one);
   return (
     <>
-      <Text>{returnTime}分</Text>
+      {/* ここが時間のところ */}
+      <Text>{timer}</Text>
       <View style={styles.wrap}>
         <MapViewDirections
           origin={coordinates[0]}
@@ -151,6 +185,12 @@ const CheckScreen = (data) => {
             setReturnTime(Math.floor(result.duration));
           }}
         />
+        <TouchableOpacity onPress={handleGo}>
+          <View>
+            <Image source={{ uri: oneImage.uri }} />
+            <Text>homeに戻る</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.textInput}>
           {/* ここに写真お願い */}
           {/* <Image source={uri:}/> */}
@@ -175,7 +215,6 @@ const CheckScreen = (data) => {
               //もう一個をfalseかtrueであげて、checklistのほうでpropsのbooleanによって書かれるか書かれないかの処理で良さそう
             }
           />
-
           <View
             style={{
               flex: 1,
@@ -184,6 +223,7 @@ const CheckScreen = (data) => {
             }}
           >
             <TouchableOpacity
+              onPress={handleAdd}
               style={{
                 backgroundColor: "#FFAA36",
                 width: "100%",
@@ -195,9 +235,6 @@ const CheckScreen = (data) => {
             >
               <Text style={styles.iconspulus}> ＋</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.addition}>
-            <Text style={styles.textaddition}>ToDoリストに追加</Text>
-          </TouchableOpacity> */}
           </View>
         </View>
         {/* </View> */}

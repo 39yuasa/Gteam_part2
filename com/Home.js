@@ -61,88 +61,104 @@ const HomeScreen = (data) => {
     });
   };
 
+  const handleGoto = () => {
+    console.log("handleGo");
+    navigation.navigate("User", {
+      index: room,
+      user: user,
+      address: dress,
+    });
+  };
+  const one = require("../assets/one.png");
+  const oneImage = Image.resolveAssetSource(one);
   return (
     <View>
-      <ImageBackground
+      {/* <ImageBackground
         source={iphone_8___se_____14}
         resizeMode="cover"
         style={styles.Images}
-      >
-        {/* <Image
+      > */}
+      {/* <Image
           source={hello}
           alt="猫"
           style={{ width: "80%", marginLeft: "10%", marginTop: 180, zIndex: 1 }}
         /> */}
-        <View>
-          <Image />
-          <TouchableOpacity>
-            <Text>todo</Text>
-          </TouchableOpacity>
-        </View>
-        <View
+      <View>
+        {/* homeと行き来するボタン */}
+        <TouchableOpacity onPress={handleGoto}>
+          <View>
+            <Image
+              source={{ uri: oneImage.uri }}
+              style={{ width: 10, height: 10 }}
+            />
+            <Text>チェックリストを見る</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          flexDirection: "row",
+        }}
+      >
+        <TouchableOpacity
+          onPress={handleReturn}
           style={{
-            flex: 1,
-            width: "100%",
-            flexDirection: "row",
+            backgroundColor: "#FFAA36",
+            width: "42%",
+            height: 47,
+            borderRadius: 5,
+            borderWidth: 0,
+            overflow: "hidden",
+            marginLeft: "6%",
+            marginTop: 240,
+            zIndex: 2,
           }}
         >
-          <TouchableOpacity
-            onPress={handleReturn}
+          <Text
             style={{
-              backgroundColor: "#FFAA36",
-              width: "42%",
-              height: 47,
-              borderRadius: 5,
-              borderWidth: 0,
-              overflow: "hidden",
-              marginLeft: "6%",
-              marginTop: 240,
-              zIndex: 2,
+              fontSize: 16,
+              fontWeight: "bold",
+              color: "#fff",
+              textAlign: "center",
+              marginTop: "auto",
+              marginBottom: "auto",
             }}
           >
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: "#fff",
-                textAlign: "center",
-                marginTop: "auto",
-                marginBottom: "auto",
-              }}
-            >
-              家に帰る
-            </Text>
-          </TouchableOpacity>
+            家に帰る
+          </Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => alert("(仮)ありがとうを送信しました。")}
+        <TouchableOpacity
+          onPress={() => alert("(仮)ありがとうを送信しました。")}
+          style={{
+            backgroundColor: "#FFAA36",
+            width: "42%",
+            height: 47,
+            borderRadius: 5,
+            borderWidth: 0,
+            overflow: "hidden",
+            marginTop: 240,
+            marginLeft: "3%",
+            zIndex: 2,
+          }}
+        >
+          <Text
             style={{
-              backgroundColor: "#FFAA36",
-              width: "42%",
-              height: 47,
-              borderRadius: 5,
-              borderWidth: 0,
-              overflow: "hidden",
-              marginTop: 240,
-              marginLeft: "3%",
-              zIndex: 2,
+              fontSize: 16,
+              fontWeight: "bold",
+              color: "#fff",
+              textAlign: "center",
+              marginTop: "auto",
+              marginBottom: "auto",
             }}
           >
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: "#fff",
-                textAlign: "center",
-                marginTop: "auto",
-                marginBottom: "auto",
-              }}
-            >
-              ありがとう
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+            ありがとう
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {/* // </ImageBackground> */}
     </View>
   );
 };
