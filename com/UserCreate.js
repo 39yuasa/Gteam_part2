@@ -57,6 +57,7 @@ const UserCreate = (data) => {
       name: userName,
       color: userColor,
       id: expoPushToken,
+      time: "",
       //ここにexpoidとcolor入る予定
     });
     navigation.navigate("Home", { room: room, user: user });

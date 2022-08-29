@@ -14,19 +14,17 @@ import iphone_8___se_____14 from "../assets/iphone_8___se_____14.png";
 import hello from "../assets/hello.png";
 import MapViewDirections from "react-native-maps-directions";
 import * as Location from "expo-location";
+import app from "../firebase";
+import { ref, onValue, set, get, child, getDatabase } from "firebase/database";
 
 const HomeScreen = (data) => {
-  const GOOGLE_API_KEY = "AIzaSyDmiqSHNcm6aqEZfNW_TtyS360_DxsPQWg";
   const navigation = useNavigation();
-  // console.log(data.route.params);
   const { room, user } = data.route.params;
-  // console.log(user);
-
   const [error, setErrorMessage] = useState("");
-  // const [Latitude, setLatitude] = useState(0);
-  // const [Longitude, setLongitude] = useState(0);
   const [dress, setDress] = useState("");
   const [text, setText] = useState("変更前");
+  const db = getDatabase(app);
+  const RoomData = ref(db);
   useEffect(() => {
     async function Int() {
       try {
@@ -34,7 +32,6 @@ const HomeScreen = (data) => {
           console.log("platですよ");
           const { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== "granted") {
-            // console.log("return動いたよ");
             setErrorMessage("位置情報サービスをオンにしてください。");
             return;
           }
@@ -42,14 +39,23 @@ const HomeScreen = (data) => {
         const location = await Location.getCurrentPositionAsync();
         const { latitude, longitude } = location.coords;
         console.log(latitude);
-        // setLatitude(latitude);
-        // setLongitude(longitude);
         setDress({ latitude: latitude, longitude: longitude });
       } catch {
         console.log(error);
       }
     }
     Int();
+    // get(
+    //   child(RoomData, `room/${room}/${user == "user1" ? "user1" : "user2"}/`)
+    // ).then((snapshot) => {
+    //   if (snapshot.exists()) {
+    //     const Data = snapshot.val();
+    //     console.log(Data.id);
+    //     // setExpoId(Data.id);
+    //   } else {
+    //     console.log("No data available");
+    //   }
+    // });
   }, []);
 
   const handleReturn = () => {
@@ -168,8 +174,4 @@ const styles = StyleSheet.create({
   container: {
     color: `#0000ff`,
   },
-  // Images: {
-  //   height: "100vh",
-  //   width: "100%",
-  // },
 });

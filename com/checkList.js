@@ -2,7 +2,6 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { CheckBox } from "react-native-elements";
 const CheckList = (props) => {
-  // if({props.check})
   return (
     <View>
       <CheckBox
@@ -16,6 +15,7 @@ const CheckList = (props) => {
         (console.log(props.check),
         (
           <TextInput
+            value={props.textBox}
             style={{
               alignSelf: "flex-start",
               borderWidth: 1,

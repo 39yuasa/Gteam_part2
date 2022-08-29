@@ -22,7 +22,25 @@ function App() {
         <Stack.Screen name="Mail" component={MailAddress} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="RoomScreen" component={RoomScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={(route) => (
+            console.log(route.route.params.room),
+            {
+              headerBackTitleVisible: false,
+              title: route.route.params.room,
+              headerStyle: {
+                backgroundColor: "#FFFFFF",
+              },
+              headerTintColor: "#333333",
+              headerTitleStyle: {
+                fontWeight: "bold",
+                fontSize: 18,
+              },
+            }
+          )}
+        />
         <Stack.Screen name="User" component={CheckScreen} />
         <Stack.Screen name="RoomCreate" component={RoomCreate} />
         <Stack.Screen name="RoomLogin" component={RoomLogin} />

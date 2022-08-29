@@ -11,28 +11,34 @@ import { ref, onValue, set, get, child, getDatabase } from "firebase/database";
 import { useEffect, useState } from "react";
 import app from "../firebase";
 import MapViewDirections from "react-native-maps-directions";
-import { useNavigation } from "@react-navigation/native";
+import { useLinkProps, useNavigation } from "@react-navigation/native";
 const CheckScreen = (data) => {
   const navigation = useNavigation();
   const { index, user, address } = data.route.params;
+  // indexにルーム名、userにuser1でろぐいんしているかuser2でログインしているかがわかる、addressに現在地の緯度経度がオブジェクトが入っている
   // addressには現在位置
   const db = getDatabase(app);
   // idにはuserのexpoIdが入っている
   // nameにログインした人の名前が入っている
-  const [task, setTask] = useState("");
-  const [color, setColor] = useState("");
-  const [color2, setColor2] = useState("");
-  const [home, setHome] = useState("");
-  const [Id, setId] = useState("");
-
+  const [task, setTask] = useState(""); // タスクのstate
+  const [color, setColor] = useState(""); //user1のcolorのstate
+  const [color2, setColor2] = useState("空"); //user2のcolorのstate
+  const [home, setHome] = useState(""); //家の緯度経度が入っているstate
+  const [Id, setId] = useState(""); //通知を送る相手のidが入っているstate
+  const [myId, setMyId] = useState("空"); //自分のexpoId
+  const [returnTime, setReturnTime] = useState(""); //帰宅にかかる時間
+  const [userName, setUserName] = useState("空"); //ログインしているユーザの名前
+  const [userName2, setUserName2] = useState(""); //ログインしていない方のユーザの名前
+  const [Hour, setHour] = useState(0); //現在時刻の時が含まれているstate
+  const [Minutes, setMinutes] = useState(0); //現在時刻の分が含まれているstate
+  const [timer, setTimer] = useState(""); //自分の家につく時間が入っている
+  const [timer2, setTimer2] = useState(""); //相手の家につく時間が入っている
   const RoomData = ref(db);
 
   useEffect(() => {
-    // console.log(task);
     get(child(RoomData, `room/${index}/`)).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
-        // console.log(Data.);
         setTask(Data.task);
         setHome(Data.home);
       } else {
@@ -40,17 +46,17 @@ const CheckScreen = (data) => {
       }
     });
 
-    // get(child(RoomData, `room/${index == "user1" ? "user1" : "user2"}/`)).then(
     get(
       child(RoomData, `room/${index}/${user == "user1" ? "user2" : "user1"}/`)
     ).then((snapshot) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
-        // console.log(Data.id);
         setColor(Data.color);
         setId(Data.id);
+        setUserName2(Data.name);
+        setTimer2(Data.time);
       } else {
-        console.log("No data available");
+        // console.log("No data available");
       }
     });
     get(
@@ -59,31 +65,29 @@ const CheckScreen = (data) => {
       if (snapshot.exists()) {
         const Data = snapshot.val();
         setColor2(Data.color);
+        setUserName(Data.name);
+        setMyId(Data.id);
       } else {
-        console.log("No data available");
+        // console.log("No data available");
       }
     });
   }, []);
   const [coordinates, setCoordinates] = useState("");
   useEffect(() => {
-    // console.log(address, home);
     setCoordinates([address, home]);
   }, [home]);
-  // console.log(coordinates);
+
   const handleChange = (value) => {
-    // console.log(value);
     const judge = (data) => {
       data.bool = !data.bool;
       data.user = user;
       async function sendPushNotification(Id) {
-        // console.log(Id);
-        // ここに通知がきそう
         const message = {
           // 端末指定
           to: Id,
           sound: "default",
-          title: "アプリ名",
-          body: `${value.key}`,
+          title: "Yattoku!",
+          body: `${value.key}をやっとくよ`,
           data: { someData: "goes here" },
         };
         try {
@@ -122,35 +126,32 @@ const CheckScreen = (data) => {
       });
     });
   };
-  // const one = require("../assets/one.png");
-  // const oneImage = Image.resolveAssetSource(one);
   const handleAdd = () => {
-    console.log("タスク追加の処理が動いたよ");
+    // console.log("タスク追加の処理が動いたよ");
   };
 
   // firebaseが書き換わったときに動く処理
-  // const room = ref(db, `room/${index}/task`);
+  // const room = ref(db, `room/${index}/${user}/`);
   // onValue(room, (snapshot) => {
   //   if (snapshot.exists()) {
   //     const Data = snapshot.val();
+  //     console.log(Data.time, timer);
+  //     // Data.time == timer ? console.log("変更はなしです") : setTimer(Data.time);
   //   } else {
   //     console.log(error);
   //   }
   // });
-  const [returnTime, setReturnTime] = useState("");
-  const [Hour, setHour] = useState(0);
-  const [Minutes, setMinutes] = useState(0);
-  const [timer, setTimer] = useState("");
   useEffect(() => {
     const hour = new Date().getHours();
     setHour(hour);
     const minutes = new Date().getMinutes();
     setMinutes(minutes);
+    // console.log(`${timer}時${hour}分です`);
     const time = Minutes + returnTime;
+    // console.log(time);
     time > 60
       ? setTimer(`${Hour + 1}:${time - 60}`)
       : setTimer(`${Hour}:${time}`);
-    // console.log(Hour);
   }, [returnTime]);
 
   const handleGo = () => {
@@ -188,26 +189,40 @@ const CheckScreen = (data) => {
     }
     sendPushNotification(Id);
   };
-  // useEffect(() => {
-  //   console.log(timer);
-  // }, [timer]);
+
+  useEffect(() => {
+    timer == ""
+      ? null
+      : set(ref(db, `room/${index}/${user}/`), {
+          time: timer,
+          name: userName,
+          id: myId,
+          color: color2,
+        });
+  }, [timer]);
   const GOOGLE_API_KEY = "AIzaSyDmiqSHNcm6aqEZfNW_TtyS360_DxsPQWg";
   const one = require("../assets/one.png");
   const oneImage = Image.resolveAssetSource(one);
   return (
     <>
       {/* ここが時間のところ */}
-      <Text>帰宅予定時刻{timer}</Text>
+      <Text>
+        {userName}帰宅予定時刻{timer}
+      </Text>
+      <Text>
+        {userName2}帰宅予定時刻{timer2}
+      </Text>
       <View style={styles.wrap}>
         <MapViewDirections
           origin={coordinates[0]}
           destination={coordinates[1]}
           apikey={GOOGLE_API_KEY} // insert your API Key here
           strokeWidth={4}
+          mode="DRIVING"
           strokeColor="#111111"
           onReady={(result) => {
-            console.log(`Distance: ${result.distance} km`);
-            console.log(`Duration: ${result.duration} min.`);
+            // console.log(`Distance: ${result.distance} km`);
+            // console.log(`Duration: ${result.duration} min.`);
             setReturnTime(Math.floor(result.duration));
           }}
         />
@@ -231,9 +246,12 @@ const CheckScreen = (data) => {
                     // style={{ backgroundColor: "lightgray", height: 1 }}
                     name={item.key}
                     option={item.bool}
-                    color={item.user == user ? color : color2}
+                    color={item.user == user ? color2 : color}
                     handle={() => handleChange(item, num)}
                     check={item.check}
+                    textBox={
+                      item.check == true ? item.text : console.log("falseです")
+                    }
                   />
                 </View>
               )

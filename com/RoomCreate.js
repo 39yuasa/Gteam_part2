@@ -20,6 +20,7 @@ const RoomCreate = () => {
   const [room, setRoom] = useState("");
   const [pass, setPass] = useState("");
   const [home, setHome] = useState("");
+  s;
   const [address, setAddress] = useState("");
   const handleSignUp = () => {
     if (room !== "" && pass !== "" && home !== "") {
@@ -46,21 +47,25 @@ const RoomCreate = () => {
         home: address,
         task: [
           {
+            user: "",
             key: "料理を作る",
             bool: false,
             check: false,
           },
           {
+            user: "",
             key: "洗濯物をたたむ",
             bool: false,
             check: false,
           },
           {
+            user: "",
             key: "お風呂を洗う",
             bool: false,
             check: false,
           },
           {
+            user: "",
             key: "買い物に行く",
             bool: false,
             check: true,
@@ -96,6 +101,7 @@ const RoomCreate = () => {
         <View>
           <Text style={styles.title1}>ルーム名</Text>
           <TextInput
+            value="hoge"
             style={{
               alignSelf: "flex-start",
               borderWidth: 1,
